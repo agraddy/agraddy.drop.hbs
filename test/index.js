@@ -20,4 +20,9 @@ res.on('finish', function() {
 drop('views/about.htm')(null, {}, res, data);
 
 
-
+var res2 = response();
+res2.on('finish', function() {
+	tap.assert.equal(res2._statusCode, 422, 'Should return a different status code if set.');
+});
+res2.writeHead(422, {'Content-type': 'text/html'});
+drop('views/about.htm')(null, {}, res2, data);

@@ -26,3 +26,17 @@ res2.on('finish', function() {
 });
 res2.writeHead(422, {'Content-type': 'text/html'});
 drop('views/about.htm')(null, {}, res2, data);
+
+
+var res3 = response();
+res3.on('finish', function() {
+    tap.assert.equal(res3._body, 'HBS\n<p>Welcome</p>\n<p>Goodbye</p>\n', 'Should replace the {{data.title}}.');
+});
+
+data.vault = {};
+data.vault.data = {};
+data.vault.config = {};
+data.vault.data.title = 'HBS';
+data.vault.data.welcome = 'Welcome';
+data.vault.data.goodbye = 'Goodbye';
+drop('views/home.htm')(null, {}, res3, data);
